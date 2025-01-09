@@ -12,4 +12,5 @@ import org.mapstruct.ReportingPolicy;
 public interface ProductMapper {
     ProductDocument toDocument(Product product);
     Product toProduct(ProductRequest productRequest);
+    Product toProduct(ProductDocument productDocument);
 }
