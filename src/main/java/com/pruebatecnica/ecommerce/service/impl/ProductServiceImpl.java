@@ -1,10 +1,15 @@
 package com.pruebatecnica.ecommerce.service.impl;
 
+import com.pruebatecnica.ecommerce.entity.ProductDocument;
 import com.pruebatecnica.ecommerce.mapper.ProductMapper;
 import com.pruebatecnica.ecommerce.model.Product;
 import com.pruebatecnica.ecommerce.repository.ProductRepository;
 import com.pruebatecnica.ecommerce.service.IProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,5 +31,14 @@ public class ProductServiceImpl implements IProductService {
         product.setUpdatedAt(LocalDateTime.now());
 
         productRepository.save(productMapper.toDocument(product));
+    }
+
+    @Override
+    public Page<Product> getAllProductsPaged(int page, int size, String direction) {
+        Sort sort = Sort.by(direction.equalsIgnoreCase(Sort.Direction.ASC.toString()) ? Sort.Direction.ASC : Sort.Direction.DESC, "createdAt");
+        Pageable pagination = PageRequest.of(page, size, sort);
+        Page<ProductDocument> productDocumentsPage = productRepository.findAll(pagination);
+
+        return productDocumentsPage.map(productMapper::toProduct);
     }
 }
