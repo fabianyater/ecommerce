@@ -1,6 +1,7 @@
 package com.pruebatecnica.ecommerce.controller;
 
 import com.pruebatecnica.ecommerce.dto.request.ProductRequest;
+import com.pruebatecnica.ecommerce.dto.response.PagedResponse;
 import com.pruebatecnica.ecommerce.dto.response.ProductListResponse;
 import com.pruebatecnica.ecommerce.dto.response.ProductResponse;
 import com.pruebatecnica.ecommerce.mapper.ProductMapper;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -40,21 +42,33 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<Page<ProductListResponse>> getAllProductsPaged(
+    public ResponseEntity<PagedResponse<ProductListResponse>> getAllProductsPaged(
             @RequestParam int page,
             @RequestParam int size,
             @RequestParam String direction) {
         Page<Product> products = productService.getAllProductsPaged(page, size, direction);
-        Page<ProductListResponse> productListResponses = products.map(product -> {
-            var productListResponse = new ProductListResponse();
-            productListResponse.setProductId(product.getProductId());
-            productListResponse.setName(product.getName());
-            productListResponse.setPrice(product.getPrice());
-            productListResponse.setStock(product.getStock());
-            return productListResponse;
-        });
 
-        return ResponseEntity.ok(productListResponses);
+        List<ProductListResponse> productListResponses = products
+                .getContent()
+                .stream()
+                .map(product -> {
+                    var dto = new ProductListResponse();
+                    dto.setProductId(product.getProductId());
+                    dto.setName(product.getName());
+                    dto.setPrice(product.getPrice());
+                    dto.setStock(product.getStock());
+                    return dto;
+                })
+                .toList();
+
+        PagedResponse<ProductListResponse> response = new PagedResponse<>();
+        response.setContent(productListResponses);
+        response.setTotalElements(products.getTotalElements());
+        response.setTotalPages(products.getTotalPages());
+        response.setPageNumber(products.getNumber());
+        response.setPageSize(products.getSize());
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{productId}")
