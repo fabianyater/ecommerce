@@ -61,4 +61,12 @@ public class ProductServiceImpl implements IProductService {
 
         productRepository.save(productDocument);
     }
+
+    @Override
+    public void deleteProduct(String productId) {
+        ProductDocument productDocument = productMapper.toDocument(getProductById(productId));
+
+        productRepository.delete(productDocument);
+
+    }
 }

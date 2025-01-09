@@ -8,4 +8,5 @@ public interface IProductService {
     Page<Product> getAllProductsPaged(int page, int size, String direction);
     Product getProductById(String productId);
     void updateProduct(Product product);
+    void deleteProduct(String productId);
 }
