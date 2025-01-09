@@ -1,9 +1,10 @@
 package com.pruebatecnica.ecommerce.service.impl;
 
 import com.pruebatecnica.ecommerce.entity.ProductDocument;
+import com.pruebatecnica.ecommerce.exception.ProductNotFoundException;
 import com.pruebatecnica.ecommerce.mapper.ProductMapper;
 import com.pruebatecnica.ecommerce.model.Product;
-import com.pruebatecnica.ecommerce.repository.ProductRepository;
+import com.pruebatecnica.ecommerce.repository.IProductRepository;
 import com.pruebatecnica.ecommerce.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements IProductService {
-    private final ProductRepository productRepository;
+    private final IProductRepository productRepository;
     private final ProductMapper productMapper;
 
     @Override
@@ -40,5 +41,12 @@ public class ProductServiceImpl implements IProductService {
         Page<ProductDocument> productDocumentsPage = productRepository.findAll(pagination);
 
         return productDocumentsPage.map(productMapper::toProduct);
+    }
+
+    @Override
+    public Product getProductById(String productId) {
+        return productRepository.findByProductId(productId)
+                .map(productMapper::toProduct)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + productId));
     }
 }
