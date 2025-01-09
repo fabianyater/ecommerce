@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,6 +62,16 @@ public class ProductController {
         ProductResponse productResponse = productMapper.toProductResponse(product);
 
         return ResponseEntity.ok(productResponse);
+    }
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<Void> updateProduct(@PathVariable String productId, @Valid @RequestBody ProductRequest productRequest) {
+        var product = productMapper.toProduct(productRequest);
+        product.setProductId(productId);
+
+        productService.updateProduct(product);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

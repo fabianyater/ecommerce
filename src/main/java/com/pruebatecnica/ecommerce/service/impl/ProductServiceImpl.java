@@ -49,4 +49,16 @@ public class ProductServiceImpl implements IProductService {
                 .map(productMapper::toProduct)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + productId));
     }
+
+    @Override
+    public void updateProduct(Product product) {
+        ProductDocument productDocument = productMapper.toDocument(getProductById(product.getProductId()));
+
+        productDocument.setName(product.getName());
+        productDocument.setPrice(product.getPrice());
+        productDocument.setStock(product.getStock());
+        productDocument.setUpdatedAt(LocalDateTime.now());
+
+        productRepository.save(productDocument);
+    }
 }
