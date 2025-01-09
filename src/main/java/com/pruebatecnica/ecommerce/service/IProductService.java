@@ -6,4 +6,5 @@ import org.springframework.data.domain.Page;
 public interface IProductService {
     void createNewProduct(Product product);
     Page<Product> getAllProductsPaged(int page, int size, String direction);
+    Product getProductById(String productId);
 }
