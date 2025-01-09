@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -19,7 +20,8 @@ import java.time.LocalDateTime;
 @Document(collection = "product")
 public class ProductDocument {
     @MongoId
-    private Long productId;
+    private ObjectId id;
+    private String productId;
 
     @Indexed
     @NotBlank(message = "El nombre del producto es requerido")

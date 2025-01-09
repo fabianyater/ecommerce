@@ -7,6 +7,9 @@ import com.pruebatecnica.ecommerce.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements IProductService {
@@ -15,6 +18,13 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public void createNewProduct(Product product) {
+        if (product.getProductId() == null) {
+            product.setProductId(UUID.randomUUID().toString());
+        }
+
+        product.setCreatedAt(LocalDateTime.now());
+        product.setUpdatedAt(LocalDateTime.now());
+
         productRepository.save(productMapper.toDocument(product));
     }
 }
