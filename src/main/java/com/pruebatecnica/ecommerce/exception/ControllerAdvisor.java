@@ -36,4 +36,15 @@ public class ControllerAdvisor {
 
         return ResponseEntity.badRequest().body(response);
     }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleProductNotFoundException(ProductNotFoundException ex) {
+        ExceptionResponse response = new ExceptionResponse(
+                List.of(ex.getMessage()),
+                HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
 }

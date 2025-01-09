@@ -2,6 +2,7 @@ package com.pruebatecnica.ecommerce.controller;
 
 import com.pruebatecnica.ecommerce.dto.request.ProductRequest;
 import com.pruebatecnica.ecommerce.dto.response.ProductListResponse;
+import com.pruebatecnica.ecommerce.dto.response.ProductResponse;
 import com.pruebatecnica.ecommerce.mapper.ProductMapper;
 import com.pruebatecnica.ecommerce.model.Product;
 import com.pruebatecnica.ecommerce.service.IProductService;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +53,14 @@ public class ProductController {
         });
 
         return ResponseEntity.ok(productListResponses);
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable String productId) {
+        var product = productService.getProductById(productId);
+        ProductResponse productResponse = productMapper.toProductResponse(product);
+
+        return ResponseEntity.ok(productResponse);
     }
 
 }
