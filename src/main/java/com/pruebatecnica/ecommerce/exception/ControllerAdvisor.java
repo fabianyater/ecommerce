@@ -1,6 +1,9 @@
 package com.pruebatecnica.ecommerce.exception;
 
+import com.mongodb.MongoTimeoutException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -14,6 +17,7 @@ import java.util.List;
 @ControllerAdvice
 @RequiredArgsConstructor
 public class ControllerAdvisor {
+    private static final Logger logger = LoggerFactory.getLogger(ControllerAdvisor.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -35,6 +39,12 @@ public class ControllerAdvisor {
         );
 
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(MongoTimeoutException.class)
+    public ResponseEntity<String> handleMongoTimeoutException(MongoTimeoutException ex) {
+        logger.error("MongoDB connection timeout", ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error de conexión con la base de datos");
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
