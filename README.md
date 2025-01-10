@@ -86,4 +86,4 @@ Para ejecutar las pruebas, puedes utilizar el siguiente comando:
 ## Covertura de Pruebas
 
 La cobertura de pruebas se ha realizado utilizando JaCoCo. 
-Puedes ver el informe completo abriendo el [informe HTML]() generado después de ejecutar las pruebas.
+Puedes ver el informe completo abriendo el [informe HTML](http://localhost:63342/ecommerce/build/reports/jacocoHtml/index.html?_ijt=tpcvfpoiathuac8b3pcl3pjpgb&_ij_reload=RELOAD_ON_SAVE) generado después de ejecutar las pruebas.
