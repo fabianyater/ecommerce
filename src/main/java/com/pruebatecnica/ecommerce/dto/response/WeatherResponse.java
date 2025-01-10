@@ -1,11 +1,13 @@
 package com.pruebatecnica.ecommerce.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@Schema(description = "Weather response information")
 public class WeatherResponse {
     private Coord coord;
     private List<Weather> weather;
