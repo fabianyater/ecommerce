@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/ecommerce
+
+weather:
+  api:
+    key: {WEATHER_API_KEY}
+    url: http://api.openweathermap.org/data/2.5/weather
