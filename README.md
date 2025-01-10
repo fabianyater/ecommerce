@@ -7,7 +7,16 @@ API Rest para gestionar la creación de productos para un ecommerce.
 - **Java 17**: Asegúrate de tener instalado Java 17 en tu sistema.
 - **MongoDB**: Una instancia de MongoDB ejecutándose en localhost:27017.
 
-## Configuración del Proyecto
+
+## Ejecutar la Aplicación
+
+1. Clona el repositorio en tu sistema.
+ ```
+    git clone https://github.com/fabianyater/ecommerce.git
+```
+2. Navega al directorio del proyecto y abra el proyecto con su IDE favorito (IntelliJ se usó para este proyecto).
+
+### Configuración del Proyecto
 
 Antes de ejecutar la aplicación, asegúrate de configurar el archivo de propiedades application.yaml con los siguientes valores:
 
@@ -32,16 +41,6 @@ weather:
 2. Crea un archivo llamado `application.yaml` o cambia el nombre del archivo `application.properties` a `application.yaml`.
 3. Copia y pega el contenido anterior en el archivo.
 
-## Ejecutar la Aplicación
-
-1. Clona el repositorio en tu sistema.
- ```
-    git clone https://github.com/fabianyater/ecommerce.git
-```
-2. Navega al directorio del proyecto.
-```
-    cd ecommerce
-```
 3. Ejecuta la aplicación utilizando Gradle.
 ```
     ./gradlew bootRun
