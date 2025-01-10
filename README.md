@@ -2,17 +2,6 @@
 
 API Rest para gestionar la creación de productos para un ecommerce.
 
-## Estructura del Proyecto
-
-- `controller`: Contiene los controladores REST.
-- `service`: Contiene los servicios de la aplicación.
-- `repository`: Contiene los repositorios de la base de datos.
-- `model`: Contiene los modelos de datos.
-- `dto`: Contiene los objetos de transferencia de datos.
-- `exception`: Contiene las excepciones personalizadas.
-- `mapper`: Contiene las clases de mapeo de objetos.
-- `config`: Contiene la configuración de la aplicación.
-
 ## Tecnologías y Herramientas Utilizadas
 
 - **Java 17**
@@ -35,45 +24,37 @@ API Rest para gestionar la creación de productos para un ecommerce.
     git clone https://github.com/fabianyater/ecommerce.git
 ```
 2. Navega al directorio del proyecto y abre el proyecto con tu IDE favorito (IntelliJ se usó para este proyecto).
-
-### Configuración del Proyecto
-
-Antes de ejecutar la aplicación, asegúrate de configurar el archivo de propiedades application.yaml con los siguientes valores:
-
-```yaml
-spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/ecommerce
-
-weather:
-  api:
-    key: a856214d721003d0d6484729aa921a07
-    url: http://api.openweathermap.org/data/2.5/weather
-```
+3. Configurar Claves de API: Crea el archivo application.yaml en ``src/main/resources`` con el siguiente contenido:
+    
+    ```yaml
+    spring:
+      data:
+        mongodb:
+          uri: mongodb://localhost:27017/ecommerce
+    
+    weather:
+      api:
+        key: TU_CLAVE_DE_API
+        url: http://api.openweathermap.org/data/2.5/weather
+    ```
+   
+Puedes obtener una clave de API de OpenWeatherMap [aquí](https://home.openweathermap.org/api_keys).
 
 - MongoDB URI: La URI de la base de datos MongoDB.
 - Weather API Key: La clave de la API de OpenWeatherMap.
 
-### Pasos para configurar el archivo
-
-1. Navega al directorio `src/main/resources` dentro del proyecto.
-2. Crea un archivo llamado `application.yaml` o cambia el nombre del archivo `application.properties` a `application.yaml`.
-3. Copia y pega el contenido anterior en el archivo.
-
-3. Ejecuta la aplicación utilizando Gradle.
+3. Ejecuta la aplicación localmente
 ```
     ./gradlew bootRun
 ```
 
-## Endpoints de la API
+## Probar los endpoints de la API
 
-Los endpoints para la gestión de productos estarán disponibles en [http://localhost:8080/api/v1/products](http://localhost:8080/api/v1/products). 
-La documentación de la API se encuentra en [Swagger UI Docs](http://localhost:8080/swagger-ui/index.html).
+Con la aplicación en ejecución, puedes acceder a los endpoints de la API. Los endpoints para la gestión de productos estarán disponibles en [Swagger UI Docs](http://localhost:8080/swagger-ui/index.html).
 
 ## Pruebas Unitarias
 
-Las pruebas unitarias se encuentran en el directorio src/test/java. Hemos utilizado JUnit y Mockito para asegurarnos de
+Las pruebas unitarias se encuentran en el directorio ``src/test/java``. Hemos utilizado JUnit y Mockito para asegurarnos de
 que la lógica de negocio funcione correctamente.
 
 Para ejecutar las pruebas, puedes utilizar el siguiente comando:
@@ -89,16 +70,19 @@ Puedes ver el informe completo abriendo el [informe HTML](http://localhost:63342
 
 ## Ejecutar aplicación usando Docker
 
-Una vez el proyecto esté configurado, vas a compilar el proyecto con el siguiente comando:
+Para ejecutar la aplicación utilizando Docker, primero debes limpiar y construir el proyecto con Gradle:
 
 ```
-./gradlew bootBuild
+./gradlew clean
+```
+```
+./gradlew build
 ```
 
-Luego, vas a ejecutar el comando de Docker compose para crear las imagenes y crear el contenedor de la aplicación:
+Luego, puedes construir la imagen de Docker con el siguiente comando:
 
 ```
 docker compose up
 ```
 
-A este momento, se descargarán las imágenes de Mongo y Java y se procederá a ejecutar el proyecto
+La aplicación se ejecutará en un contenedor Docker y estará disponible en [http://localhost:8080](http://localhost:8080).
